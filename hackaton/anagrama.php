@@ -7,7 +7,7 @@
         <form method="post" action="anagrama.php">
             <div>
                 <label for="texto">Texto</label>
-                <input type="text" id="texto" name="texto" maxlength="16" pattern="[A-Z\s]+$" />
+                <input type="text" id="texto" name="texto" maxlength="16">
             </div></br>
 
             <div>
@@ -30,18 +30,24 @@
 
     } else {
         $texto = $_POST['texto'];
-        echo "Palavra digitada => ".$texto;
-        echo "</br>";
 
-        $anagrama = array();
+        /* Funcao preg_match verifica se $texto contém só letras e maiúsculas */
+        if(preg_match( '/[A-Z]/' , $texto)) {
 
-        /* Popula um array com o anagrama da variável $texto */
-        for($i=0; $i<10000; $i++){
-            array_push($anagrama, str_shuffle($texto));
+            echo "Palavra digitada => ".$texto."</br>";
+            $anagrama = array();
+
+            /* Popula um array com o anagrama da variável $texto */
+            for ($i = 0; $i < 10000; $i++) {
+                array_push($anagrama, str_shuffle($texto));
+            }
+
+            /* Função array_unique remove valores duplicados de um array */
+            $lista = array_unique($anagrama);
+
+        } else {
+            echo "<script>alert('Somente letras Maiúsculas [A-Z]');</script>";
         }
-
-        /* Função array_unique remove valores duplicados de um array */
-        $lista = array_unique($anagrama);
     }
 
 
